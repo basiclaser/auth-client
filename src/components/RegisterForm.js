@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 const { REACT_APP_API_URL = "http://localhost:4000" } = process.env;
 
 const RegisterForm = () => {
-  const [formState, setFormState] = useState({});
+  let history = useHistory();
 
+  const [formState, setFormState] = useState({});
   const handleSubmit = (e) => {
     e.preventDefault();
     fetch(REACT_APP_API_URL + "/register", {
@@ -14,7 +16,10 @@ const RegisterForm = () => {
         "Content-Type": "application/json",
       },
       "Access-Control-Allow-Origin": "http://localhost:4000",
-    });
+    })
+      .then((res) => res.json())
+      .then((res) => history.push(res.redirectUrl))
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e) => {
