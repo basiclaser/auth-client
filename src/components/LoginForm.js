@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 const { REACT_APP_API_URL = "http://localhost:4000" } = process.env;
 
-const RegisterForm = () => {
+const LoginForm = () => {
   let history = useHistory();
 
   const [formState, setFormState] = useState({});
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(REACT_APP_API_URL + "/register", {
+    fetch(REACT_APP_API_URL + "/login", {
       method: "POST",
       body: JSON.stringify(formState),
       credentials: "include",
@@ -29,17 +29,8 @@ const RegisterForm = () => {
   };
   return (
     <div>
-      <h1>Register</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label for="name">name</label>
-          <input
-            onChange={handleChange}
-            value={formState.name}
-            type="text"
-            name="name"
-          ></input>
-        </div>
         <div>
           <label for="email">email</label>
           <input
@@ -58,11 +49,11 @@ const RegisterForm = () => {
             name="password"
           ></input>
         </div>
-        <button type="submit">register</button>
+        <button type="submit">login</button>
       </form>
-      <Link to="/login">login</Link>
+      <Link to="/register">register</Link>
     </div>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
